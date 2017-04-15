@@ -1,4 +1,4 @@
-# AWS SDK for Node.js Sample Project
+# ALEXA MY CHEF - GET YOUR HEALTHY MEAL HERE
 
 Alexa MyChef voice skill!
 
