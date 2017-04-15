@@ -119,6 +119,10 @@ var dessert = ["Get off your lazy ass and make yourself your own food",
   "MEMED",
   "Dairy-free Peanut Butter Chocolate Brittle Cake with almond frosting and glaze."];
 
+var sodium = "The daily average needed intake of sodium is 1500 millegrams and a maximum of 2300 millegrams";
+var potassium = "The daily average needed intake of potassium is 4700 millegrams";
+var addedSugar = "The daily limit of added sugars is 40 grams";
+
 exports.handler = function(event, context, callback) {
 
   // Write your Skill handler code here. This is where you
@@ -210,7 +214,28 @@ exports.handler = function(event, context, callback) {
       this.emit(':tell', randomSayingFruit);
       // req.end();
     },
+    'GetFact': function() {
+      var info = String(this.event.request.intent.slots.fact);
 
+      var randomSaying;
+      if (info === "Added Sugar" || info === "added sugar") {
+
+        randomSaying = addedSugar;
+      }
+      if (info === "Sodium" || info === "sodium") {
+
+        randomSaying = sodium;
+      }
+      if (info === "Potassium" || info === "potassium") {
+
+        randomSaying = pot;
+      }
+
+      // Choose a random saying from the awesomeSayings array.
+
+      // Tell Alexa to speak that saying.
+      this.emit(':tell', randomSaying);
+    }
     // Intent: GetAwesomeSaying returns a random saying from the
     // array of possible sayings awesomeSayings
     'GetAwesomeNumber': function() {
