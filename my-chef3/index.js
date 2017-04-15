@@ -3,6 +3,8 @@ var Alexa = require('clay-alexa-sdk');
 var USDAkey="Q2W8cDINhmomMkw2Qv91Vq3laaACY2NB8J54WsdI";
 var http = require("https");
 var fruit = [];
+var fruitDBN = [];
+var fruitInfo = [];
 var options = {
   "method": "GET",
   "hostname": "api.nal.usda.gov",
@@ -31,6 +33,7 @@ var req = http.request(options, function(res) {
     var length = jsonObj.list.end;
     for (var x = 0; x < length; x++) {
       fruit.push(jsonObj.list.item[x].name);
+      fruitDBN.push(jsonObj.list.item[x].ndbno);
       console.log(fruit);
     }
   // console.log(body.toString());
@@ -38,6 +41,40 @@ var req = http.request(options, function(res) {
 });
 
 req.end();
+
+for (var x = 0; x < fruitDBN.length; x++){
+
+  var optionsNutrition = {
+    "method": "GET",
+    "hostname": "api.nal.usda.gov",
+    "port": null,
+    "path": "/ndb/nutrients/?format=json&api_key=Q2W8cDINhmomMkw2Qv91Vq3laaACY2NB8J54WsdI&nutrients=205&nutrients=204&nutrients=208&nutrients=269&" + fruitDBN[x],
+    "headers": {
+      "cache-control": "no-cache",
+      "postman-token": "f4a4d3f3-2966-9ef7-cf2c-11f177947d71"
+    }
+  };
+
+  var req = http.request(options, function(res) {
+    var chunks = [];
+
+    res.on("data", function(chunk) {
+      chunks.push(chunk);
+    // fruit.push(chunk);
+    // console.log(fruit);
+    });
+
+    res.on("end", function() {
+      var body = Buffer.concat(chunks);
+      var jsonObj = JSON.parse(body.toString());
+      console.log(jsonObj);
+      fruitInfo.push(jsonObj.report.foods.nutrients[0].unit+" "+jsonObj.report.foods.nutrients[0].value);
+      // fruitInfo[x] = jsonObj;
+    // console.log(body.toString());
+    });
+  });
+}
+
 // Array of possible Awesome things that Alexa can respond with.
 const awesomeSayings = [
   "You are a force of nature.",
@@ -116,7 +153,11 @@ exports.handler = function(event, context, callback) {
 
       // Choose a random saying from the awesomeSayings array.
       const randomSayingIndex = Math.floor(Math.random() * fruit.length);
-      const randomSaying = fruit[randomSayingIndex];
+      const randomSaying = fruit[randomSayingIndex]+" "+fruitInfo[randomSayingIndex];
+
+      // Choose a random saying from the awesomeSayings array.
+      // const randomSayingIndex2 = Math.floor(Math.random() * fruitInfo.length);
+      // const randomSaying = fruit[randomSayingIndex].nutrients.value;
 
       // Tell Alexa to speak that saying.
       this.emit(':tell', randomSaying);
