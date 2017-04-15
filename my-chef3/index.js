@@ -3,8 +3,15 @@ var Alexa = require('clay-alexa-sdk');
 var USDAkey = "Q2W8cDINhmomMkw2Qv91Vq3laaACY2NB8J54WsdI";
 var http = require("https");
 var fruit = [];
+var pork = ["Bacon", "Ham"];
+var chicken = [];
+var beef = [];
+var fish = [];
+var shrimp = [];
+var tofu = [];
 var fruitDBN = [];
 var fruitInfo = [];
+
 var options = {
   "method": "GET",
   "hostname": "api.nal.usda.gov",
@@ -111,6 +118,7 @@ var breakfast = ["How about eggs fried in olive oil with french toast and a glas
 var dessert = ["Get off your lazy ass and make yourself your own food",
   "MEMED",
   "Dairy-free Peanut Butter Chocolate Brittle Cake with almond frosting and glaze."];
+
 exports.handler = function(event, context, callback) {
 
   // Write your Skill handler code here. This is where you
@@ -121,6 +129,7 @@ exports.handler = function(event, context, callback) {
   var handlers = {
     'GetMeal': function() {
       var selectedMeal = String(this.event.request.intent.slots.meal.value);
+      var meatOption=String(this.event.request.intent.slots.meat.value);
       var randomSaying;
       if (selectedMeal === "Meal" || selectedMeal === "meal") {
         const randomSayingIndexMeal = Math.floor(Math.random() * meal.length);
@@ -142,6 +151,12 @@ exports.handler = function(event, context, callback) {
         const randomSayingIndexDT = Math.floor(Math.random() * dessert.length);
         randomSaying = dessert[randomSayingIndexDT];
       }
+
+      if (selectedMeat === "Pork" || selectedMeal === "pork") {
+        const randomSayingIndexPK = Math.floor(Math.random() * pork.length);
+        randomSaying = pork[randomSayingIndexPK];
+      }
+
       // Choose a random saying from the awesomeSayings array.
 
       // Tell Alexa to speak that saying.
