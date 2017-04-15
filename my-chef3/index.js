@@ -1,33 +1,33 @@
 // Require your files or libraries here. You can use npm to install libraries.
 var Alexa = require('clay-alexa-sdk');
-// var USDAkey="Q2W8cDINhmomMkw2Qv91Vq3laaACY2NB8J54WsdI";
-// var https=require('https');
-// var optionsget={
-//   host:'api.nal.usda.gov',
-//   api_key: USDAkey,
-//   format: 'json',
-//   port: 443,
-//   fg: 'fruit and fruit juices',
-//   max: 30,
-//   path: '/ndb/search/',
-//   method: 'GET'
-// };
+var USDAkey="Q2W8cDINhmomMkw2Qv91Vq3laaACY2NB8J54WsdI";
+var https=require('https');
+var optionsget={
+  host:'api.nal.usda.gov',
+  api_key: USDAkey,
+  format: 'json',
+  port: 443,
+  fg: 'fruit and fruit juices',
+  max: 30,
+  path: '/ndb/search/',
+  method: 'GET'
+};
 
-// // do the GET request
-// var reqGet = https.request(optionsget, function(res) {
-//     console.log("statusCode: ", res.statusCode);
-//     // uncomment it for header details
-// //  console.log("headers: ", res.headers);
+// do the GET request
+var reqGet = https.request(optionsget, function(res) {
+    console.log("statusCode: ", res.statusCode);
+    // uncomment it for header details
+//  console.log("headers: ", res.headers);
+    var fruit=[];
+    res.on('data', function(d) {
+      const usdaFruit = JSON.parse(d);
+      var length=usdaFruit.list.total;
+      for (var x=0; x<length; x++){
+        fruit.push(usdaFruit.list.item[x].name);
+      }
+    });
 
-//     res.on('data', function(d) {
-//       const usdaFruit = JSON.parse(d);
-//       var length=usdaFruit.list.total;
-//       for (var x=0; x<length; x++){
-//         fruit[x] = usdaFruit.list.item[x].name;
-//       }
-//     });
-
-// });
+});
 // Array of possible Awesome things that Alexa can respond with.
 const awesomeSayings = [
   "You are a force of nature.",
@@ -61,7 +61,9 @@ var breakfast = ["How about eggs fried in olive oil with french toast and a glas
   "Chocolate Quinoa Breakfast Bowl",
   "Overnight Crock-Pot Egg Casserole",
   "Warm Fruit Bowl made with cherries, raspberries, blueberries, sprinkled with dark chocolate and doused in low fat milk."];
-var dessert = ["Get off your lazy ass and make yourself your own food"];
+var dessert = ["Get off your lazy ass and make yourself your own food",
+  "MEMED",
+  "Dairy-free Peanut Butter Chocolate Brittle Cake with almond frosting and glaze."];
 exports.handler = function(event, context, callback) {
 
   // Write your Skill handler code here. This is where you
@@ -90,8 +92,8 @@ exports.handler = function(event, context, callback) {
         randomSaying = meal[randomSayingIndexD];
       }
       if (selectedMeal === "Dessert" || selectedMeal === "dessert") {
-        const randomSayingIndexDT = Math.floor(Math.random() * desert.length);
-        randomSaying = meal[randomSayingIndexDT];
+        const randomSayingIndexDT = Math.floor(Math.random() * dessert.length);
+        randomSaying = dessert[randomSayingIndexDT];
       }
       // Choose a random saying from the awesomeSayings array.
 
@@ -100,11 +102,11 @@ exports.handler = function(event, context, callback) {
     },
     // Intent: GetAwesomeSaying returns a random saying from the
     // array of possible sayings awesomeSayings
-    'GetAwesomeSaying': function() {
+    'GetFruit': function() {
 
       // Choose a random saying from the awesomeSayings array.
-      const randomSayingIndex = Math.floor(Math.random() * awesomeSayings.length);
-      const randomSaying = awesomeSayings[randomSayingIndex];
+      const randomSayingIndex = Math.floor(Math.random() * fruit.length);
+      const randomSaying = fruit[randomSayingIndex];
 
       // Tell Alexa to speak that saying.
       this.emit(':tell', randomSaying);
