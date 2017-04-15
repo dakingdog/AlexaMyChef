@@ -61,7 +61,7 @@ var breakfast = ["How about eggs fried in olive oil with french toast and a glas
   "Chocolate Quinoa Breakfast Bowl",
   "Overnight Crock-Pot Egg Casserole",
   "Warm Fruit Bowl made with cherries, raspberries, blueberries, sprinkled with dark chocolate and doused in low fat milk."];
-
+var dessert = ["Get off your lazy ass and make yourself your own food"];
 exports.handler = function(event, context, callback) {
 
   // Write your Skill handler code here. This is where you
@@ -89,7 +89,10 @@ exports.handler = function(event, context, callback) {
         const randomSayingIndexD = Math.floor(Math.random() * meal.length);
         randomSaying = meal[randomSayingIndexD];
       }
-
+      if (selectedMeal === "Dessert" || selectedMeal === "dessert") {
+        const randomSayingIndexDT = Math.floor(Math.random() * desert.length);
+        randomSaying = meal[randomSayingIndexDT];
+      }
       // Choose a random saying from the awesomeSayings array.
 
       // Tell Alexa to speak that saying.
