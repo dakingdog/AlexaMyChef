@@ -1,16 +1,35 @@
 // Require your files or libraries here. You can use npm to install libraries.
+let fruit = [];
+
 var Alexa = require('clay-alexa-sdk');
 var USDAkey="Q2W8cDINhmomMkw2Qv91Vq3laaACY2NB8J54WsdI";
 var https=require('https');
 var optionsget={
   host:'api.nal.usda.gov',
   api_key: USDAkey,
+  format: 'json',
   port: 443,
-  fg: 'fruit',
+  fg: 'fruit and fruit juices',
   max: 30,
   path: '/ndb/search/',
   method: 'GET'
 };
+
+// do the GET request
+var reqGet = https.request(optionsget, function(res) {
+    console.log("statusCode: ", res.statusCode);
+    // uncomment it for header details
+//  console.log("headers: ", res.headers);
+
+    res.on('data', function(d) {
+      const usdaFruit = JSON.parse(d);
+      var length=usdaFruit.list.total;
+      for (var x=0; x<length; x++){
+        fruit[x] = usdaFruit.list.item[x].name;
+      }
+    });
+
+});
 
 // TODO: Populate arrays with possible meal suggestions. Make sure they're healthy and nutritious!
 let meal = ["Try an apple walnut spinach salad sometime. It's a delicious, healthy meal loaded with polyunsaturated fats and plenty of vitamins.",
@@ -36,7 +55,7 @@ let entree = [];
 let side = [];
 let vegent = [];
 let vegside = [];
-let fruit = [];
+
 let dessert = [];
 
 exports.handler = function(event, context, callback) {
@@ -78,6 +97,7 @@ exports.handler = function(event, context, callback) {
         const randomSayingIndexD = Math.floor(Math.random() * meal.length);
         randomSaying = meal[randomSayingIndexD];
       }
+
       // Choose a random saying from the awesomeSayings array.
 
       // Tell Alexa to speak that saying.
