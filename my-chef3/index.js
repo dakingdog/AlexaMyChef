@@ -2,6 +2,7 @@
 var Alexa = require('clay-alexa-sdk');
 var USDAkey="Q2W8cDINhmomMkw2Qv91Vq3laaACY2NB8J54WsdI";
 var https=require('https');
+var fruit=[];
 var optionsget={
   host:'api.nal.usda.gov',
   api_key: USDAkey,
@@ -18,7 +19,7 @@ var reqGet = https.request(optionsget, function(res) {
     console.log("statusCode: ", res.statusCode);
     // uncomment it for header details
 //  console.log("headers: ", res.headers);
-    var fruit=[];
+
     res.on('data', function(d) {
       const usdaFruit = JSON.parse(d);
       var length=usdaFruit.list.total;
