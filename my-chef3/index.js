@@ -3,7 +3,7 @@ var Alexa = require('clay-alexa-sdk');
 var USDAkey = "Q2W8cDINhmomMkw2Qv91Vq3laaACY2NB8J54WsdI";
 var http = require("https");
 var fruit = [];
-var pork = ["Bacon", "Ham"];
+var pork = ["Savory Oatmeal With an Egg and Bacon", "Avocado Toast With Egg, sprinkled with salt and pepper and Ham"];
 var chicken = [];
 var beef = [];
 var fish = [];
@@ -154,7 +154,7 @@ exports.handler = function(event, context, callback) {
 
       if (meatOption === "Pork" || meatOption === "pork") {
         const randomSayingIndexPK = Math.floor(Math.random() * pork.length);
-        randomSaying =+ " with " + pork[randomSayingIndexPK];
+        randomSaying =pork[randomSayingIndexPK];
       }
 
       // Choose a random saying from the awesomeSayings array.
