@@ -1,34 +1,43 @@
 // Require your files or libraries here. You can use npm to install libraries.
 var Alexa = require('clay-alexa-sdk');
 var USDAkey="Q2W8cDINhmomMkw2Qv91Vq3laaACY2NB8J54WsdI";
-var https=require('https');
-var fruit=[];
-var optionsget={
-  host:'api.nal.usda.gov',
-  api_key: USDAkey,
-  format: 'json',
-  port: 443,
-  fg: 'fruit and fruit juices',
-  max: 30,
-  path: '/ndb/search/',
-  method: 'GET'
+var http = require("https");
+var fruit = [];
+var options = {
+  "method": "GET",
+  "hostname": "api.nal.usda.gov",
+  "port": null,
+  "path": "/ndb/search/?format=json&sort=n&max=25&offset=0&fg=fruits%20and%20fruit%20juices&api_key=Q2W8cDINhmomMkw2Qv91Vq3laaACY2NB8J54WsdI",
+  "headers": {
+    "authorization": "Bearer=eyJpZCI6IjAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMSJ9",
+    "cache-control": "no-cache",
+    "postman-token": "1a6302a9-0c45-4451-b491-f97af2b00931"
+  }
 };
 
-// do the GET request
-var reqGet = https.request(optionsget, function(res) {
-    console.log("statusCode: ", res.statusCode);
-    // uncomment it for header details
-//  console.log("headers: ", res.headers);
+var req = http.request(options, function(res) {
+  var chunks = [];
 
-    res.on('data', function(d) {
-      const usdaFruit = JSON.parse(d);
-      var length=usdaFruit.list.total;
-      for (var x=0; x<length; x++){
-        fruit.push(usdaFruit.list.item[x].name);
-      }
-    });
+  res.on("data", function(chunk) {
+    chunks.push(chunk);
+  // fruit.push(chunk);
+  // console.log(fruit);
+  });
 
+  res.on("end", function() {
+    var body = Buffer.concat(chunks);
+    var jsonObj = JSON.parse(body.toString());
+    console.log(jsonObj);
+    var length = jsonObj.list.end;
+    for (var x = 0; x < length; x++) {
+      fruit.push(jsonObj.list.item[x].name);
+      console.log(fruit);
+    }
+  // console.log(body.toString());
+  });
 });
+
+req.end();
 // Array of possible Awesome things that Alexa can respond with.
 const awesomeSayings = [
   "You are a force of nature.",
