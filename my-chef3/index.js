@@ -152,7 +152,7 @@ exports.handler = function(event, context, callback) {
         randomSaying = dessert[randomSayingIndexDT];
       }
 
-      if (selectedMeat === "Pork" || selectedMeal === "pork") {
+      if ((meatOption === "Pork" || meatOption === "pork")&&(selectedMeal === "Breakfast" || selectedMeal === "breakfast")) {
         const randomSayingIndexPK = Math.floor(Math.random() * pork.length);
         randomSaying = pork[randomSayingIndexPK];
       }
