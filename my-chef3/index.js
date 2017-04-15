@@ -218,7 +218,7 @@ exports.handler = function(event, context, callback) {
       var info = String(this.event.request.intent.slots.fact);
 
       var randomSaying;
-      if (info === "Added Sugar" || info === "added sugar") {
+      if (info === "Sugar" || info === "sugar") {
 
         randomSaying = addedSugar;
       }
