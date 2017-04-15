@@ -118,10 +118,10 @@ var breakfast = ["How about eggs fried in olive oil with french toast and a glas
 var dessert = ["Get off your lazy ass and make yourself your own food",
   "MEMED",
   "Dairy-free Peanut Butter Chocolate Brittle Cake with almond frosting and glaze."];
-
-var sodium = "The daily average needed intake of sodium is 1500 millegrams and a maximum of 2300 millegrams";
-var potassium = "The daily average needed intake of potassium is 4700 millegrams";
-var addedSugar = "The daily limit of added sugars is 40 grams";
+var facts = ["The daily average needed intake of sodium is 1500 millegrams and a maximum of 2300 millegrams",
+  "The daily average needed intake of potassium is 4700 millegrams",
+  "The daily limit of added sugars is 40 grams"
+];
 
 exports.handler = function(event, context, callback) {
 
@@ -133,7 +133,7 @@ exports.handler = function(event, context, callback) {
   var handlers = {
     'GetMeal': function() {
       var selectedMeal = String(this.event.request.intent.slots.meal.value);
-      var meatOption=String(this.event.request.intent.slots.meat.value);
+      var meatOption = String(this.event.request.intent.slots.meat.value);
       var randomSaying;
       if (selectedMeal === "Meal" || selectedMeal === "meal") {
         const randomSayingIndexMeal = Math.floor(Math.random() * meal.length);
@@ -158,7 +158,7 @@ exports.handler = function(event, context, callback) {
 
       if (meatOption === "Pork" || meatOption === "pork") {
         const randomSayingIndexPK = Math.floor(Math.random() * pork.length);
-        randomSaying =pork[randomSayingIndexPK];
+        randomSaying = pork[randomSayingIndexPK];
       }
 
       // Choose a random saying from the awesomeSayings array.
@@ -212,30 +212,30 @@ exports.handler = function(event, context, callback) {
 
       // Tell Alexa to speak that saying.
       this.emit(':tell', randomSayingFruit);
-      // req.end();
+    // req.end();
     },
     'GetFact': function() {
-      var info = String(this.event.request.intent.slots.fact);
+      var info = String(this.event.request.intent.slots.fact.value);
 
       var randomSaying;
       if (info === "Sugar" || info === "sugar") {
 
-        randomSaying = addedSugar;
+        randomSaying = facts[2];
       }
       if (info === "Sodium" || info === "sodium") {
 
-        randomSaying = sodium;
+        randomSaying = facts[0];
       }
       if (info === "Potassium" || info === "potassium") {
 
-        randomSaying = pot;
+        randomSaying = facts[1];
       }
 
       // Choose a random saying from the awesomeSayings array.
 
       // Tell Alexa to speak that saying.
       this.emit(':tell', randomSaying);
-    }
+    },
     // Intent: GetAwesomeSaying returns a random saying from the
     // array of possible sayings awesomeSayings
     'GetAwesomeNumber': function() {
