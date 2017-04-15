@@ -1,0 +1,16 @@
+{
+  "accountName": "public",
+  "serviceName": "my-chef",
+  "username": "congwang",
+  "serviceDescription": "A service that takes in bits and moves atoms",
+  "inputs": [
+    {
+      "name": "myVariable",
+      "type": "text",
+      "displayName": "Human Readable Variable",
+      "description": "Description of variable"
+    }
+  ],
+  "serviceDisplayName": "my-chef",
+  "serviceType": "alexa"
+}
