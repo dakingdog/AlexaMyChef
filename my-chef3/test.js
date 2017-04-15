@@ -1,4 +1,6 @@
 var USDAkey = "Q2W8cDINhmomMkw2Qv91Vq3laaACY2NB8J54WsdI";
+var fruitDBN = [];
+var fruitInfo = [];
 // var https=require('https');
 // // var optionsget={
 // //   host:'api.nal.usda.gov',
@@ -58,14 +60,47 @@ var req = http.request(options, function(res) {
   res.on("end", function() {
     var body = Buffer.concat(chunks);
     var jsonObj = JSON.parse(body.toString());
-    console.log(jsonObj);
+    // console.log(jsonObj);
     var length = jsonObj.list.end;
     for (var x = 0; x < length; x++) {
       fruit.push(jsonObj.list.item[x].name);
-      console.log(fruit);
+      fruitDBN.push(jsonObj.list.item[x].ndbno);
+      console.log(fruitDBN[x]);
     }
   // console.log(body.toString());
   });
 });
 
 req.end();
+//fruitDBN.length
+for (var x = 0; x < 5; x++){
+  var options = {
+    "method": "GET",
+    "hostname": "api.nal.usda.gov",
+    "port": null,
+    "path": "/ndb/nutrients/?format=json&api_key=Q2W8cDINhmomMkw2Qv91Vq3laaACY2NB8J54WsdI&nutrients=205&nutrients=204&nutrients=208&nutrients=269&ndbno="+fruitDBN[x],
+    "headers": {
+      "cache-control": "no-cache",
+      "postman-token": "f4a4d3f3-2966-9ef7-cf2c-11f177947d71"
+    }
+  };
+
+  var req = http.request(options, function(res) {
+    var chunks = [];
+    res.on("data", function(chunk) {
+      chunks.push(chunk);
+    // fruit.push(chunk);
+    // console.log(fruit);
+    });
+
+    res.on("end", function() {
+      var body = Buffer.concat(chunks);
+      var jsonObj = JSON.parse(body.toString());
+      console.log(jsonObj);
+      fruitInfo.push(jsonObj.report.foods.nutrients[0].unit+" "+jsonObj.report.foods.nutrients[0].value);
+      console.log(fruitInfo[x]);
+      // fruitInfo[x] = jsonObj;
+    // console.log(body.toString());
+    });
+  });
+}
