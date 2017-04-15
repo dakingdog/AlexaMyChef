@@ -152,9 +152,9 @@ exports.handler = function(event, context, callback) {
         randomSaying = dessert[randomSayingIndexDT];
       }
 
-      if ((meatOption === "Pork" || meatOption === "pork")&&(selectedMeal === "Breakfast" || selectedMeal === "breakfast")) {
+      if (meatOption === "Pork" || meatOption === "pork") {
         const randomSayingIndexPK = Math.floor(Math.random() * pork.length);
-        randomSaying = pork[randomSayingIndexPK];
+        randomSaying =+ " with " + pork[randomSayingIndexPK];
       }
 
       // Choose a random saying from the awesomeSayings array.
