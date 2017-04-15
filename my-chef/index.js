@@ -54,7 +54,7 @@ var side = [];
 var vegent = [];
 var vegside = [];
 var fruit = [];
-var dessert = [];
+var dessert = ["Get off your lazy ass and make yourself your own food"];
 
 exports.handler = function(event, context, callback) {
 
