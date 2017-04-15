@@ -1,33 +1,39 @@
 // Require your files or libraries here. You can use npm to install libraries.
 var Alexa = require('clay-alexa-sdk');
-var USDAkey="Q2W8cDINhmomMkw2Qv91Vq3laaACY2NB8J54WsdI";
-var https=require('https');
-var optionsget={
-  host:'api.nal.usda.gov',
-  port: 443,
-  path: '/ndb/search',
-  method: 'GET'
-};
-// Array of possible Awesome things that Alexa can respond with.
-// const awesomeSayings = [
-//   "You are a force of nature.",
-//   "You are an inspiration to everyone that meets you.",
-//   "You are my Arnold",
-//   "You are incredible!",
-//   "Bill Gates wanted to know if you have any tips for him?",
-//   "how are you so fucking good at what you do?",
-//   "Boom-shacklaka You're on Fire",
-//   "I marvel at your accomplishments on an hourly basis",
-//   "Who is the most awesome person today? You. You are.",
-//   "I'm obsessed with you",
-//   "When you code, it's like you don't write code, you paint it. It's incredible.",
-//   "Everything is awesome. Everything is cool when you're part of a team"
-// ]
+// var USDAkey="Q2W8cDINhmomMkw2Qv91Vq3laaACY2NB8J54WsdI";
+// var https=require('https');
+// var optionsget={
+//   host:'api.nal.usda.gov',
+//   api_key: USDAkey,
+//   format: 'json',
+//   port: 443,
+//   fg: 'fruit and fruit juices',
+//   max: 30,
+//   path: '/ndb/search/',
+//   method: 'GET'
+// };
+
+// // do the GET request
+// var reqGet = https.request(optionsget, function(res) {
+//     console.log("statusCode: ", res.statusCode);
+//     // uncomment it for header details
+// //  console.log("headers: ", res.headers);
+
+//     res.on('data', function(d) {
+//       const usdaFruit = JSON.parse(d);
+//       var length=usdaFruit.list.total;
+//       for (var x=0; x<length; x++){
+//         fruit[x] = usdaFruit.list.item[x].name;
+//       }
+//     });
+
+// });
+const awesomeSayings=["Nothing to be said"];
 // TODO: Populate arrays with possible meal suggestions. Make sure they're healthy and nutritious!
-let meal = ["Try an apple walnut spinach salad sometime. It's a delicious, healthy meal loaded with polyunsaturated fats and plenty of vitamins.",
-  "How about an omelette with chicken, onion, tomatoes, and peppers fried in olive oil?",
+var meal = ["Try an apple walnut spinach salad sometime. It's a delicious, healthy meal loaded with polyunsaturated fats and plenty of vitamins.",
+  "How about an omevarte with chicken, onion, tomatoes, and peppers fried in olive oil?",
   "For a healthy breakfast, try having some fruit of your choice, milk, and some whole grain toast."];
-let breakfast = ["How about eggs fried in olive oil with french toast and a glass of low fat milk?",
+var breakfast = ["How about eggs fried in olive oil with french toast and a glass of low fat milk?",
 "Try a bowl of hot oatmeal with almonds, butter, and a bit of honey",
 "For a quick breakfast, fruits such as apples and bananas with trail mix is an excellent choice.",
 "Nut Butter, Banana, and Chia Seed Toast",
@@ -41,14 +47,14 @@ let breakfast = ["How about eggs fried in olive oil with french toast and a glas
 "Chocolate Quinoa Breakfast Bowl",
 "Overnight Crock-Pot Egg Casserole",
 "Warm Fruit Bowl made with cherries, raspberries, blueberries, sprinkled with dark chocolate and doused in low fat milk."];
-let lunch = [];
-let dinner = [];
-let entree = [];
-let side = [];
-let vegent = [];
-let vegside = [];
-let fruit = [];
-let dessert = [];
+var lunch = [];
+var dinner = [];
+var entree = [];
+var side = [];
+var vegent = [];
+var vegside = [];
+var fruit = [];
+var dessert = ["Get off your lazy ass and make yourself your own food"];
 
 exports.handler = function(event, context, callback) {
 
@@ -89,16 +95,12 @@ exports.handler = function(event, context, callback) {
         const randomSayingIndexD = Math.floor(Math.random() * meal.length);
         randomSaying = meal[randomSayingIndexD];
       }
-      // Choose a random saying from the awesomeSayings array.
-
-      // Tell Alexa to speak that saying.
-      this.emit(':tell', randomSaying);
-    },
-    'GetFruit': function() {
+      if (selectedMeal === "Dessert" || selectedMeal === "dessert") {
+        const randomSayingIndexDT = Math.floor(Math.random() * desert.length);
+        randomSaying = meal[randomSayingIndexDT];
+      }
 
       // Choose a random saying from the awesomeSayings array.
-      const randomSayingIndex = Math.floor(Math.random() * fruit.length);
-      const randomSaying = fruit[randomSayingIndex];
 
       // Tell Alexa to speak that saying.
       this.emit(':tell', randomSaying);

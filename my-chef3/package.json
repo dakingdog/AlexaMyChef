@@ -1,5 +1,5 @@
 {
-  "name": "my-chef",
+  "name": "my-chef3",
   "description": "A service that takes in bits and moves atoms",
   "authors": "congwang",
   "version": "0.0.1",
@@ -8,6 +8,6 @@
     "clay-alexa-sdk": "*"
   },
   "scripts": {
-    "start": "node my-chef"
+    "start": "node my-chef3"
   }
 }
