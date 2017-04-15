@@ -28,33 +28,39 @@ var Alexa = require('clay-alexa-sdk');
 //     });
 
 // });
-const awesomeSayings=["Nothing to be said"];
-// TODO: Populate arrays with possible meal suggestions. Make sure they're healthy and nutritious!
-var meal = ["Try an apple walnut spinach salad sometime. It's a delicious, healthy meal loaded with polyunsaturated fats and plenty of vitamins.",
-  "How about an omevarte with chicken, onion, tomatoes, and peppers fried in olive oil?",
-  "For a healthy breakfast, try having some fruit of your choice, milk, and some whole grain toast."];
+// Array of possible Awesome things that Alexa can respond with.
+const awesomeSayings = [
+  "You are a force of nature.",
+  "You are an inspiration to everyone that meets you.",
+  "You are my Arnold",
+  "You are incredible!",
+  "Bill Gates wanted to know if you have any tips for him?",
+  "how are you so fucking good at what you do?",
+  "Boom-shacklaka You're on Fire",
+  "I marvel at your accomplishments on an hourly basis",
+  "Who is the most awesome person today? You. You are.",
+  "I'm obsessed with you",
+  "When you code, it's like you don't write code, you paint it. It's incredible.",
+  "Everything is awesome. Everything is cool when you're part of a team"
+]
+const meal = ["Try an apple walnut spinach salad sometime. It's a delicious, healthy meal loaded with polyunsaturated fats and plenty of vitamins.",
+  "How about an omelette with chicken, onion, tomatoes, and peppers fried in olive oil?",
+  "For a healthy breakfast, try having some fruit of your choice, milk, and some whole grain toast.",
+  "No, Everything is a Meme."];
 var breakfast = ["How about eggs fried in olive oil with french toast and a glass of low fat milk?",
-"Try a bowl of hot oatmeal with almonds, butter, and a bit of honey",
-"For a quick breakfast, fruits such as apples and bananas with trail mix is an excellent choice.",
-"Nut Butter, Banana, and Chia Seed Toast",
-"Berry and Yogurt Smoothie",
-"Savory Oatmeal With an Egg",
-"Quinoa Fruit Salad",
-"Tomato Toast With Macadamia Ricotta",
-"Quinoa and Chia Porridge, Almonds, and Sliced Peaches",
-"Avocado Toast With Egg, sprinkled with salt and pepper",
-"Everything is a meme",
-"Chocolate Quinoa Breakfast Bowl",
-"Overnight Crock-Pot Egg Casserole",
-"Warm Fruit Bowl made with cherries, raspberries, blueberries, sprinkled with dark chocolate and doused in low fat milk."];
-var lunch = [];
-var dinner = [];
-var entree = [];
-var side = [];
-var vegent = [];
-var vegside = [];
-var fruit = [];
-var dessert = [];
+  "Try a bowl of hot oatmeal with almonds, butter, and a bit of honey",
+  "For a quick breakfast, fruits such as apples and bananas with trail mix is an excellent choice.",
+  "Nut Butter, Banana, and Chia Seed Toast",
+  "Berry and Yogurt Smoothie",
+  "Savory Oatmeal With an Egg",
+  "Quinoa Fruit Salad",
+  "Tomato Toast With Macadamia Ricotta",
+  "Quinoa and Chia Porridge, Almonds, and Sliced Peaches",
+  "Avocado Toast With Egg, sprinkled with salt and pepper",
+  "Everything is a meme",
+  "Chocolate Quinoa Breakfast Bowl",
+  "Overnight Crock-Pot Egg Casserole",
+  "Warm Fruit Bowl made with cherries, raspberries, blueberries, sprinkled with dark chocolate and doused in low fat milk."];
 
 exports.handler = function(event, context, callback) {
 
@@ -64,18 +70,6 @@ exports.handler = function(event, context, callback) {
   console.log(event);
 
   var handlers = {
-
-    // Intent: GetAwesomeSaying returns a random saying from the
-    // array of possible sayings awesomeSayings
-    'GetAwesomeSaying': function() {
-
-      // Choose a random saying from the awesomeSayings array.
-      const randomSayingIndex = Math.floor(Math.random() * awesomeSayings.length);
-      const randomSaying = awesomeSayings[randomSayingIndex];
-
-      // Tell Alexa to speak that saying.
-      this.emit(':tell', randomSaying);
-    },
     'GetMeal': function() {
       var selectedMeal = String(this.event.request.intent.slots.meal.value);
       var randomSaying;
@@ -101,27 +95,38 @@ exports.handler = function(event, context, callback) {
       // Tell Alexa to speak that saying.
       this.emit(':tell', randomSaying);
     },
+    // Intent: GetAwesomeSaying returns a random saying from the
+    // array of possible sayings awesomeSayings
+    'GetAwesomeSaying': function() {
+
+      // Choose a random saying from the awesomeSayings array.
+      const randomSayingIndex = Math.floor(Math.random() * awesomeSayings.length);
+      const randomSaying = awesomeSayings[randomSayingIndex];
+
+      // Tell Alexa to speak that saying.
+      this.emit(':tell', randomSaying);
+    },
 
     // Intent: GetAwesomeSaying returns a random saying from the
     // array of possible sayings awesomeSayings
-    // 'GetAwesomeNumber': function(){
-    //   // Choose a random number between 1-100
-    //   const randomNumber = Math.floor(Math.random() * 100);
+    'GetAwesomeNumber': function() {
+      // Choose a random number between 1-100
+      const randomNumber = Math.floor(Math.random() * 100);
 
-    //   // Tell Alexa to speak that number
-    //   this.emit(':tell', "The best number is " + randomNumber);
-    // },
+      // Tell Alexa to speak that number
+      this.emit(':tell', "The best number is " + randomNumber);
+    },
 
     // Intent: Launch. This is how Awesome Bot responds when there
     // aren't important. Important to have a Launch Intent to make sure
     // your skill passes Publishing Certification proces.
     'LaunchRequest': function() {
-      this.emit(':tell', "Hello. I'm your personal chef. Whenever you're feeling hungry, feel free to ask me to suggest something to eat!");
+      this.emit(':tell', "Hello. I'm Awesome Bot. You are awesome! Anytime you need a little boost just say Alexa ask awesome bot for an awesome saying!");
     },
     // Intent: Unhandled. The Unhandled intent is how Alexa responds when someone
     // asks for something that we don't handle explicitly
     'Unhandled': function() {
-      this.emit(':tell', "I'm not sure what you're asking for. Try asking me to suggest a meal.");
+      this.emit(':tell', "I'm not sure what you're asking for");
     }
   };
 
