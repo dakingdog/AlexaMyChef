@@ -4,25 +4,14 @@ var USDAkey="Q2W8cDINhmomMkw2Qv91Vq3laaACY2NB8J54WsdI";
 var https=require('https');
 var optionsget={
   host:'api.nal.usda.gov',
+  api_key: USDAkey,
   port: 443,
-  path: '/ndb/search',
+  fg: 'fruit',
+  max: 30,
+  path: '/ndb/search/',
   method: 'GET'
 };
-// Array of possible Awesome things that Alexa can respond with.
-// const awesomeSayings = [
-//   "You are a force of nature.",
-//   "You are an inspiration to everyone that meets you.",
-//   "You are my Arnold",
-//   "You are incredible!",
-//   "Bill Gates wanted to know if you have any tips for him?",
-//   "how are you so fucking good at what you do?",
-//   "Boom-shacklaka You're on Fire",
-//   "I marvel at your accomplishments on an hourly basis",
-//   "Who is the most awesome person today? You. You are.",
-//   "I'm obsessed with you",
-//   "When you code, it's like you don't write code, you paint it. It's incredible.",
-//   "Everything is awesome. Everything is cool when you're part of a team"
-// ]
+
 // TODO: Populate arrays with possible meal suggestions. Make sure they're healthy and nutritious!
 let meal = ["Try an apple walnut spinach salad sometime. It's a delicious, healthy meal loaded with polyunsaturated fats and plenty of vitamins.",
   "How about an omelette with chicken, onion, tomatoes, and peppers fried in olive oil?",
