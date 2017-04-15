@@ -16,7 +16,7 @@ var options = {
   "method": "GET",
   "hostname": "api.nal.usda.gov",
   "port": null,
-  "path": "/ndb/search/?format=json&sort=n&max=25&offset=0&fg=fruits%20and%20fruit%20juices&api_key=Q2W8cDINhmomMkw2Qv91Vq3laaACY2NB8J54WsdI",
+  "path": "/ndb/search/?format=json&sort=n&max=25&offset=0&q=raw&fg=fruits%20and%20fruit%20juices&api_key=Q2W8cDINhmomMkw2Qv91Vq3laaACY2NB8J54WsdI",
   "headers": {
     "authorization": "Bearer=eyJpZCI6IjAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMSJ9",
     "cache-control": "no-cache",
@@ -168,44 +168,47 @@ exports.handler = function(event, context, callback) {
 
       // Choose a random saying from the awesomeSayings array.
       const randomSayingIndex = Math.floor(Math.random() * fruit.length);
-      let randomSayingFruit = fruit[randomSayingIndex];
-      var options = {
-        "method": "GET",
-        "hostname": "api.nal.usda.gov",
-        "port": null,
-        "path": "/ndb/nutrients/?format=json&api_key=Q2W8cDINhmomMkw2Qv91Vq3laaACY2NB8J54WsdI&nutrients=205&nutrients=204&nutrients=208&nutrients=269&ndbno="+fruitDBN[randomSayingIndex],
-        "headers": {
-          "cache-control": "no-cache",
-          "postman-token": "f4a4d3f3-2966-9ef7-cf2c-11f177947d71"
-        }
-      };
+      var randomSayingFruit = fruit[randomSayingIndex];
+      // var randomSayingFruit2;
+      // var randomSayingFruit3;
+      // var http=require('https');
+      // var options = {
+      //   "method": "GET",
+      //   "hostname": "api.nal.usda.gov",
+      //   "port": null,
+      //   "path": "/ndb/nutrients/?format=json&api_key=Q2W8cDINhmomMkw2Qv91Vq3laaACY2NB8J54WsdI&nutrients=205&nutrients=204&nutrients=208&nutrients=269&ndbno="+fruitDBN[randomSayingIndex],
+      //   "headers": {
+      //     "cache-control": "no-cache",
+      //     "postman-token": "f4a4d3f3-2966-9ef7-cf2c-11f177947d71"
+      //   }
+      // };
 
-      var req = http.request(options, function(res) {
-        var chunks = [];
-        res.on("data", function(chunk) {
-          chunks.push(chunk);
-        // fruit.push(chunk);
-        // console.log(fruit);
-        });
+      // var req = http.request(options, function(res) {
+      //   var chunks = [];
+      //   res.on("data", function(chunk) {
+      //     chunks.push(chunk);
+      //   // fruit.push(chunk);
+      //   // console.log(fruit);
+      //   });
 
-        res.on("end", function() {
-          var body = Buffer.concat(chunks);
-          var jsonObj = JSON.parse(body.toString());
-          console.log(jsonObj);
-          randomSayingFruit+=" "+jsonObj.report.foods.nutrients[0].unit + " " + jsonObj.report.foods.nutrients[0].value;
-          // fruitInfo.push(jsonObj.report.foods.nutrients[0].unit + " " + jsonObj.report.foods.nutrients[0].value);
-          console.log(fruitInfo[x]);
-        // fruitInfo[x] = jsonObj;
-        // console.log(body.toString());
-        });
-      });
-
+      //   res.on("end", function() {
+      //     var body = Buffer.concat(chunks);
+      //     var jsonObj = JSON.parse(body.toString());
+      //     console.log(jsonObj);
+      //     randomSayingFruit2=jsonObj.report.foods[0].nutrients[0].unit;
+      //     randomSayingFruit3=jsonObj.report.foods[0].nutrients[0].value;
+      //     var finalfruit2=randomSayingFruit2.toString();
+      //     var finalfruit3=randomSayingFruit3.toString();
+      //   console.log(body.toString());
+      //   });
+      // });
       // Choose a random saying from the awesomeSayings array.
       // const randomSayingIndex2 = Math.floor(Math.random() * fruitInfo.length);
       // const randomSaying = fruit[randomSayingIndex].nutrients.value;
 
       // Tell Alexa to speak that saying.
       this.emit(':tell', randomSayingFruit);
+      // req.end();
     },
 
     // Intent: GetAwesomeSaying returns a random saying from the
@@ -222,7 +225,7 @@ exports.handler = function(event, context, callback) {
     // aren't important. Important to have a Launch Intent to make sure
     // your skill passes Publishing Certification proces.
     'LaunchRequest': function() {
-      this.emit(':tell', "Hello. I'm Awesome Bot. You are awesome! Anytime you need a little boost just say Alexa ask awesome bot for an awesome saying!");
+      this.emit(':tell', "Hello. I'm chefbot. Try asking, me for food suggestions.");
     },
     // Intent: Unhandled. The Unhandled intent is how Alexa responds when someone
     // asks for something that we don't handle explicitly
